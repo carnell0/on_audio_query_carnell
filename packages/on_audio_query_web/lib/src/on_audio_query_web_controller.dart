@@ -53,18 +53,16 @@ class _OnAudioQueryWebController {
       if (mp3instance.parseTagsSync()) {
         Map<String, dynamic>? data = mp3instance.getMetaTags();
         // If [data] is null, the file probably has some wrong [bytes].
-        if (data != null) {
-          // "format" into a [Map<String, dynamic>], all keys are based on [Android]
-          // platforms so, if you change some key, will have to change the [Android] too.
-          Map formattedAudio = data.formatAudio(
-            audio,
-            mp3instance.mp3Bytes.length,
-          );
+        // "format" into a [Map<String, dynamic>], all keys are based on [Android]
+        // platforms so, if you change some key, will have to change the [Android] too.
+        Map formattedAudio = data.formatAudio(
+          audio,
+          mp3instance.mp3Bytes.length,
+        );
 
-          // Temporary and the final list.
-          tmpList.add(SongModel(formattedAudio));
-        }
-      }
+        // Temporary and the final list.
+        tmpList.add(SongModel(formattedAudio));
+            }
     }
 
     // Now we sort the list based on [sortType].
@@ -162,7 +160,7 @@ class _OnAudioQueryWebController {
         Map<String, dynamic>? data = mp3instance.getMetaTags();
         // If [data] is null, the file probably has some wrong [bytes].
         // To avoid duplicate items, check if [helperList] already has this name.
-        if (data!["Album"] != null && !helperList.contains(data["Album"])) {
+        if (data["Album"] != null && !helperList.contains(data["Album"])) {
           // "format" into a [Map<String, dynamic>], all keys are based on [Android]
           // platforms so, if you change some key, will have to change the [Android] too.
           Map formattedAudio = await data.formatAlbum(audio);
@@ -236,7 +234,7 @@ class _OnAudioQueryWebController {
         Map<String, dynamic>? data = mp3instance.getMetaTags();
         // If [data] is null, the file probably has some wrong [bytes].
         // To avoid duplicate items, check if [helperList] already has this name.
-        if (data!["Artist"] != null && !helperList.contains(data["Artist"])) {
+        if (data["Artist"] != null && !helperList.contains(data["Artist"])) {
           // "format" into a [Map<String, dynamic>], all keys are based on [Android]
           // platforms so, if you change some key, will have to change the [Android] too.
           Map formattedArtist = await data.formatArtist(audio);
@@ -334,7 +332,7 @@ class _OnAudioQueryWebController {
         Map<String, dynamic>? data = mp3instance.getMetaTags();
         // If [data] is null, the file probably has some wrong [bytes].
         // To avoid duplicate items, check if [helperList] already has this name.
-        if (data!["Genre"] != null && !helperList.contains(data["Genre"])) {
+        if (data["Genre"] != null && !helperList.contains(data["Genre"])) {
           // Count and add the number of songs for every genre.
           tmpMediaCount += 1;
 
@@ -399,56 +397,54 @@ class _OnAudioQueryWebController {
       if (mp3instance.parseTagsSync()) {
         Map<String, dynamic>? data = mp3instance.getMetaTags();
         // If [data] is null, the file probably has some wrong [bytes].
-        if (data != null) {
-          // Choose the type(place) where file/files will be "queried".
-          switch (type) {
-            case AudiosFromType.ALBUM:
-              if (data["Album"] != null && data["Album"] == where) {
-                // "format" into a [Map<String, dynamic>], all keys are based on [Android]
-                // platforms so, if you change some key, will have to change the [Android] too.
-                Map formattedAudio = data.formatAudio(
-                  audio,
-                  mp3instance.mp3Bytes.length,
-                );
+        // Choose the type(place) where file/files will be "queried".
+        switch (type) {
+          case AudiosFromType.ALBUM:
+            if (data["Album"] != null && data["Album"] == where) {
+              // "format" into a [Map<String, dynamic>], all keys are based on [Android]
+              // platforms so, if you change some key, will have to change the [Android] too.
+              Map formattedAudio = data.formatAudio(
+                audio,
+                mp3instance.mp3Bytes.length,
+              );
 
-                // Temporary and the final list.
-                tmpList.add(SongModel(formattedAudio));
-              }
-              break;
+              // Temporary and the final list.
+              tmpList.add(SongModel(formattedAudio));
+            }
+            break;
 
-            case AudiosFromType.ARTIST:
-              if (data["Artist"] != null && data["Artist"] == where) {
-                // "format" into a [Map<String, dynamic>], all keys are based on [Android]
-                // platforms so, if you change some key, will have to change the [Android] too.
-                Map formattedAudio = data.formatAudio(
-                  audio,
-                  mp3instance.mp3Bytes.length,
-                );
+          case AudiosFromType.ARTIST:
+            if (data["Artist"] != null && data["Artist"] == where) {
+              // "format" into a [Map<String, dynamic>], all keys are based on [Android]
+              // platforms so, if you change some key, will have to change the [Android] too.
+              Map formattedAudio = data.formatAudio(
+                audio,
+                mp3instance.mp3Bytes.length,
+              );
 
-                // Temporary and the final list.
-                tmpList.add(SongModel(formattedAudio));
-              }
-              break;
+              // Temporary and the final list.
+              tmpList.add(SongModel(formattedAudio));
+            }
+            break;
 
-            case AudiosFromType.GENRE:
-              if (data["Genre"] != null && data["Genre"] == where) {
-                // "format" into a [Map<String, dynamic>], all keys are based on [Android]
-                // platforms so, if you change some key, will have to change the [Android] too.
-                Map formattedAudio = data.formatAudio(
-                  audio,
-                  mp3instance.mp3Bytes.length,
-                );
+          case AudiosFromType.GENRE:
+            if (data["Genre"] != null && data["Genre"] == where) {
+              // "format" into a [Map<String, dynamic>], all keys are based on [Android]
+              // platforms so, if you change some key, will have to change the [Android] too.
+              Map formattedAudio = data.formatAudio(
+                audio,
+                mp3instance.mp3Bytes.length,
+              );
 
-                // Temporary and the final list.
-                tmpList.add(SongModel(formattedAudio));
-              }
-              break;
+              // Temporary and the final list.
+              tmpList.add(SongModel(formattedAudio));
+            }
+            break;
 
-            default:
-              break;
-          }
+          default:
+            break;
         }
-      }
+            }
     }
 
     // Now we sort the list based on [sortType].
@@ -538,58 +534,56 @@ class _OnAudioQueryWebController {
       if (mp3instance.parseTagsSync()) {
         Map<String, dynamic>? data = mp3instance.getMetaTags();
         // If [data] is null, the file probably has some wrong [bytes].
-        if (data != null) {
-          // Now we split between Audios/Albums/Artist or Genres.
-          switch (withType) {
-            // AudiosArgs:
-            //   * TITLE
-            //   * DISPLAY_NAME
-            //   * ALBUM
-            //   * ARTIST
-            case WithFiltersType.AUDIOS:
-              tmpList = checkSongsArgs(
-                argsVal,
-                args,
-                tmpList.cast<SongModel>(),
-              );
-              break;
+        // Now we split between Audios/Albums/Artist or Genres.
+        switch (withType) {
+          // AudiosArgs:
+          //   * TITLE
+          //   * DISPLAY_NAME
+          //   * ALBUM
+          //   * ARTIST
+          case WithFiltersType.AUDIOS:
+            tmpList = checkSongsArgs(
+              argsVal,
+              args,
+              tmpList.cast<SongModel>(),
+            );
+            break;
 
-            // AlbumsArgs:
-            //   * ALBUM
-            //   * ARTIST
-            case WithFiltersType.ALBUMS:
-              tmpList = checkAlbumsArgs(
-                argsVal,
-                args,
-                tmpList.cast<AlbumModel>(),
-              );
-              break;
+          // AlbumsArgs:
+          //   * ALBUM
+          //   * ARTIST
+          case WithFiltersType.ALBUMS:
+            tmpList = checkAlbumsArgs(
+              argsVal,
+              args,
+              tmpList.cast<AlbumModel>(),
+            );
+            break;
 
-            // ArtistsArgs:
-            //   * ARTIST
-            case WithFiltersType.ARTISTS:
-              tmpList = checkArtistsArgs(
-                argsVal,
-                args,
-                tmpList.cast<ArtistModel>(),
-              );
-              break;
+          // ArtistsArgs:
+          //   * ARTIST
+          case WithFiltersType.ARTISTS:
+            tmpList = checkArtistsArgs(
+              argsVal,
+              args,
+              tmpList.cast<ArtistModel>(),
+            );
+            break;
 
-            // GenresArgs:
-            //   * GENRE
-            case WithFiltersType.GENRES:
-              tmpList = checkGenresArgs(
-                argsVal,
-                args,
-                tmpList.cast<GenreModel>(),
-              );
-              break;
+          // GenresArgs:
+          //   * GENRE
+          case WithFiltersType.GENRES:
+            tmpList = checkGenresArgs(
+              argsVal,
+              args,
+              tmpList.cast<GenreModel>(),
+            );
+            break;
 
-            default:
-              break;
-          }
+          default:
+            break;
         }
-      }
+            }
     }
     return tmpList;
   }
@@ -627,7 +621,7 @@ class _OnAudioQueryWebController {
         MP3Instance mp3instance = await _getMP3(song.data);
         if (mp3instance.parseTagsSync()) {
           Map<String, dynamic>? data = mp3instance.getMetaTags();
-          return data != null ? base64Decode(data["APIC"]["base64"]) : null;
+          return base64Decode(data["APIC"]["base64"]);
         }
       }
     }
